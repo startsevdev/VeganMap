@@ -1,9 +1,10 @@
 from aiogram import types
 
-from loader import dp
+from loader import dispatcher
+from utils.get_nearest_locations import get_nearest_location
 
 
 # Сюда летят сообщения с ЛОКАЦИЕЙ
-@dp.message_handler(content_types=types.ContentTypes.LOCATION)
+@dispatcher.message_handler(content_types=types.ContentTypes.LOCATION)
 async def location_handler(message: types.Message):
-    await message.answer("Ваши координаты: {0}, {1}".format(message.location.latitude, message.location.longitude))
+    await message.answer(get_nearest_location(message))

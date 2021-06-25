@@ -1,8 +1,8 @@
 from aiogram import Dispatcher
 
-from loader import dp
+from loader import dispatcher
 from .throttling import ThrottlingMiddleware
 
 
 if __name__ == "middlewares":
-    dp.middleware.setup(ThrottlingMiddleware())
+    dispatcher.middleware.setup(ThrottlingMiddleware())

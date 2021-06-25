@@ -5,10 +5,10 @@ from aiogram.utils.exceptions import (Unauthorized, InvalidQueryID, TelegramAPIE
                                       CantParseEntities, MessageCantBeDeleted)
 
 
-from loader import dp
+from loader import dispatcher
 
 
-@dp.errors_handler()
+@dispatcher.errors_handler()
 async def errors_handler(update, exception):
     """
     Exceptions handler. Catches all exceptions within task factory tasks.
