@@ -4,6 +4,7 @@ services:
 
   app:
     build: .
+    restart: always
     ports:
       - 8081:8081
     depends_on:
@@ -14,7 +15,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD: strongpass
     ports:
       - 5432:5432
 
