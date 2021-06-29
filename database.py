@@ -1,6 +1,5 @@
 import logging
 import psycopg2
-from psycopg2 import Error
 
 from data.config import PG_HOST, PG_PASS, PG_USER
 
