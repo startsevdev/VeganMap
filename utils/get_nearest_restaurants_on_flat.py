@@ -1,6 +1,7 @@
 from aiogram import types
 from shapely.geometry import Point, MultiPoint
 from shapely.ops import nearest_points
+
 from loader import restaurants
 
 
