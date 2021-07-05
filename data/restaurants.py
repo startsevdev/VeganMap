@@ -1,5 +1,4 @@
 import csv
-from shapely.geometry import Point
 
 
 ONLY_VEGAN = 0
