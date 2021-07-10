@@ -1,6 +1,11 @@
 import csv
 
-from . import statuses
+
+# RESTAURANT STATUSES
+ONLY_VEGAN = 0
+VEGAN_KITCHEN = 1
+PARTLY_VEGAN = 2
+FEW_OPTIONS = 3
 
 
 class Restaurant:
@@ -18,13 +23,13 @@ class Restaurant:
     @staticmethod
     def encode_status(status):
         if status == "Only vegan":
-            status = statuses.ONLY_VEGAN
+            status = ONLY_VEGAN
         elif status == "Vegan kitchen":
-            status = statuses.VEGAN_KITCHEN
+            status = VEGAN_KITCHEN
         elif status == "Partly vegan":
-            status = statuses.PARTLY_VEGAN
+            status = PARTLY_VEGAN
         else:
-            status = statuses.FEW_OPTIONS
+            status = FEW_OPTIONS
         return status
 
     @staticmethod
@@ -38,14 +43,21 @@ class Restaurant:
             longitude = 0.0
         return [latitude, longitude]
 
+    def get_message_content(self):
+        image_id = self.image_id
+        text = "*{name}*\n{menu_description}\n{link}\n{address}".format(
+            name=self.name, menu_description=self.get_menu_description(), link=self.link,
+            address=self.address)
+        return image_id, text
+
     def get_menu_description(self):
-        if self.status == statuses.ONLY_VEGAN:
+        if self.status == ONLY_VEGAN:
             return "100% vegan"
-        elif self.status == statuses.PARTLY_VEGAN:
+        elif self.status == PARTLY_VEGAN:
             return "Больше трех веганских позиций"
-        elif self.status == statuses.FEW_OPTIONS:
+        elif self.status == FEW_OPTIONS:
             return self.positions
-        elif self.status == statuses.VEGAN_KITCHEN:
+        elif self.status == VEGAN_KITCHEN:
             return "Кухня – 100% vegan. По напиткам уточняйте"
 
 
