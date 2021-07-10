@@ -9,7 +9,7 @@ PARTLY_VEGAN = 2
 class Restaurant:
     def __init__(self, name, status, positions, image_link, link, address, coords):
         self.name = name
-        self.status = Restaurant.encode_status(self, status)
+        self.status = Restaurant.encode_status(status)
         self.positions = positions
         self.image_link = image_link
         self.link = link
@@ -19,7 +19,7 @@ class Restaurant:
         self.longitude = coords[1]
 
     @staticmethod
-    def encode_status(self, status):
+    def encode_status(status):
         if status == "Only vegan":
             status = ONLY_VEGAN
         elif status == VEGAN_KITCHEN:
