@@ -1,4 +1,7 @@
 import csv
+from aiogram import types
+
+from geopy import distance
 
 
 # RESTAURANT STATUSES
@@ -16,9 +19,32 @@ class Restaurant:
         self.image_id = image_id
         self.link = link
         self.address = address
+        self.menu_description = self.create_menu_description()
+
         coords = Restaurant.split_coords(coords)
         self.latitude = coords[0]
         self.longitude = coords[1]
+
+    def create_message_content(self, message: types.Message):
+        image_id = self.image_id
+        text = '*{name}*\n{menu_description}\n[Instagram]({link})\n\n{address}\n{distance} км от вас'.format(
+            name=self.name, menu_description=self.menu_description, link=self.link,
+            address=self.address, distance=round(self.calculate_distance(message), 2))
+        return image_id, text
+
+    def calculate_distance(self, message: types.Message):
+        user_location = (message.location.latitude, message.location.longitude)
+        return distance.distance(user_location, (self.latitude, self.longitude)).km
+
+    def create_menu_description(self):
+        if self.status == ONLY_VEGAN:
+            return "100% vegan"
+        elif self.status == PARTLY_VEGAN:
+            return "Больше трех веганских позиций"
+        elif self.status == FEW_OPTIONS:
+            return self.positions
+        elif self.status == VEGAN_KITCHEN:
+            return "Кухня – 100% vegan. По напиткам уточняйте"
 
     @staticmethod
     def encode_status(status):
@@ -42,23 +68,6 @@ class Restaurant:
             latitude = 0.0
             longitude = 0.0
         return [latitude, longitude]
-
-    def get_message_content(self):
-        image_id = self.image_id
-        text = "*{name}*\n{menu_description}\n{link}\n{address}".format(
-            name=self.name, menu_description=self.get_menu_description(), link=self.link,
-            address=self.address)
-        return image_id, text
-
-    def get_menu_description(self):
-        if self.status == ONLY_VEGAN:
-            return "100% vegan"
-        elif self.status == PARTLY_VEGAN:
-            return "Больше трех веганских позиций"
-        elif self.status == FEW_OPTIONS:
-            return self.positions
-        elif self.status == VEGAN_KITCHEN:
-            return "Кухня – 100% vegan. По напиткам уточняйте"
 
 
 def create_restaurants():

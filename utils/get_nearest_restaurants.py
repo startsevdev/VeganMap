@@ -4,10 +4,8 @@ from geopy import distance
 from loader import restaurants
 
 
-def get_3_nearest_restaurants(user_location: types.Message):
-    user_location = (user_location.location.latitude, user_location.location.longitude)
-    sorted_restaurants = sorted(restaurants, key=lambda restaurant: distance.distance(
-        user_location, (restaurant.latitude, restaurant.longitude)))
+def get_3_nearest_restaurants(message: types.Message):
+    sorted_restaurants = sorted(restaurants, key=lambda restaurant: restaurant.calculate_distance(message))
     return sorted_restaurants[0:3]
 
 
