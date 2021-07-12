@@ -27,7 +27,7 @@ class Restaurant:
 
     def create_message_content(self, message: types.Message):
         image_id = self.image_id
-        text = '*{name}*\n{menu_description}\n[Instagram]({link})\n\n{address}\n{distance} км от вас'.format(
+        text = "<b>{name}</b>\n{menu_description}\n<a href='{link}'>Instagram</a>\n\n{address}\n{distance} км от вас".format(
             name=self.name, menu_description=self.menu_description, link=self.link,
             address=self.address, distance=round(self.calculate_distance(message), 2))
         return image_id, text
