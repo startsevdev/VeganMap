@@ -19,22 +19,23 @@ class Restaurant:
         self.image_id = image_id
         self.link = link
         self.address = address
+        self.coords_str = coords
+        self.location = Restaurant.parse_coords(self.coords_str)
         self.menu_description = self.create_menu_description()
 
-        coords = Restaurant.split_coords(coords)
-        self.latitude = coords[0]
-        self.longitude = coords[1]
-
     def create_message_content(self, message: types.Message):
-        image_id = self.image_id
-        text = "<b>{name}</b>\n{menu_description}\n<a href='{link}'>Instagram</a>\n\n{address}\n{distance} км от вас".format(
-            name=self.name, menu_description=self.menu_description, link=self.link,
-            address=self.address, distance=round(self.calculate_distance(message), 2))
+        if self.image_id == "":
+            image_id = "AgACAgIAAxkBAAIH7GDsYzx_ZBpw6q_J4b0BZ_jmeL6sAAJ6szEbrgABaEuSFdUE77IV4gEAAwIAA3MAAyAE"
+        else:
+            image_id = self.image_id
+        text = "<b>{name}</b>\n{menu_description}\n<a href='{link}'>Instagram</a>\n{address}\n{distance} от вас".format(
+            name=self.name, menu_description=self.menu_description, link=self.link, address=self.address,
+            distance=Restaurant.format_distance(self.calculate_distance(message)))
         return image_id, text
 
     def calculate_distance(self, message: types.Message):
         user_location = (message.location.latitude, message.location.longitude)
-        return distance.distance(user_location, (self.latitude, self.longitude)).km
+        return distance.distance(user_location, self.location).km
 
     def create_menu_description(self):
         if self.status == ONLY_VEGAN:
@@ -59,15 +60,21 @@ class Restaurant:
         return status
 
     @staticmethod
-    def split_coords(coords):
+    def parse_coords(coords):
         if coords != "":
-            split_coords = coords.split(",")
-            latitude = float(split_coords[0])
-            longitude = float(split_coords[1])
+            location = tuple(coords.split(","))
+            for string in location:
+                float(string)
         else:
-            latitude = 0.0
-            longitude = 0.0
-        return [latitude, longitude]
+            location = (0.0, 0.0)
+        return location
+
+    @staticmethod
+    def format_distance(distance_km):
+        if distance_km < 1:
+            return "{0} м".format(round(distance_km * 1000))
+        else:
+            return "{0} км".format(round(distance_km, 1))
 
 
 def create_restaurants():
