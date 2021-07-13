@@ -12,6 +12,6 @@ async def location_handler(message: types.Message):
 
     for restaurant in nearest_restaurants:
         image_id, text = restaurant.create_message_content(message)
-        await message.answer_photo(photo=image_id, caption=text, parse_mode="HTML",
-                                   reply_markup=create_open_map_kb("{}, {}".format(restaurant.coords_str, restaurant.name)))
+        await message.answer_photo(photo=image_id, caption=text, parse_mode="HTML", reply_markup=create_open_map_kb(
+            "{}:{}:{}".format(restaurant.latitude, restaurant.longitude, restaurant.name)))
 

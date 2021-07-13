@@ -19,8 +19,7 @@ class Restaurant:
         self.image_id = image_id
         self.link = link
         self.address = address
-        self.coords_str = coords
-        self.location = Restaurant.parse_coords(self.coords_str)
+        self.latitude, self.longitude = Restaurant.parse_coords(coords)
         self.menu_description = self.create_menu_description()
 
     def create_message_content(self, message: types.Message):
@@ -35,7 +34,8 @@ class Restaurant:
 
     def calculate_distance(self, message: types.Message):
         user_location = (message.location.latitude, message.location.longitude)
-        return distance.distance(user_location, self.location).km
+        restaurant_location = (self.latitude, self.longitude)
+        return distance.distance(user_location, restaurant_location).km
 
     def create_menu_description(self):
         if self.status == ONLY_VEGAN:
@@ -62,12 +62,13 @@ class Restaurant:
     @staticmethod
     def parse_coords(coords):
         if coords != "":
-            location = tuple(coords.split(","))
-            for string in location:
-                float(string)
+            split_coords = coords.split(", ")
+            latitude = split_coords[0]
+            longitude = split_coords[1]
         else:
-            location = (0.0, 0.0)
-        return location
+            latitude = 0.0
+            longitude = 0.0
+        return latitude, longitude
 
     @staticmethod
     def format_distance(distance_km):
