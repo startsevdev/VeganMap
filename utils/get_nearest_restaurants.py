@@ -1,11 +1,10 @@
 from aiogram import types
-from geopy import distance
 
 from loader import restaurants
 
 
-def get_3_nearest_restaurants(message: types.Message):
-    sorted_restaurants = sorted(restaurants, key=lambda restaurant: restaurant.calculate_distance(message))
+def get_3_nearest_restaurants(latitude: float, longitude: float):
+    sorted_restaurants = sorted(restaurants, key=lambda restaurant: restaurant.calculate_distance(latitude, longitude))
     return sorted_restaurants[0:3]
 
 

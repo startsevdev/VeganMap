@@ -27,13 +27,14 @@ class Restaurant:
             image_id = "AgACAgIAAxkBAAIH7GDsYzx_ZBpw6q_J4b0BZ_jmeL6sAAJ6szEbrgABaEuSFdUE77IV4gEAAwIAA3MAAyAE"
         else:
             image_id = self.image_id
+
         text = "<b>{name}</b>\n{menu_description}\n<a href='{link}'>Instagram</a>\n{address}\n{distance} от вас".format(
             name=self.name, menu_description=self.menu_description, link=self.link, address=self.address,
-            distance=Restaurant.format_distance(self.calculate_distance(message)))
+            distance=Restaurant.format_distance(self.calculate_distance(message.location.latitude, message.location.longitude)))
         return image_id, text
 
-    def calculate_distance(self, message: types.Message):
-        user_location = (message.location.latitude, message.location.longitude)
+    def calculate_distance(self, latitude: float, longitude: float):
+        user_location = (latitude, longitude)
         restaurant_location = (self.latitude, self.longitude)
         return distance.distance(user_location, restaurant_location).km
 

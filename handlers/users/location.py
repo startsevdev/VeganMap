@@ -9,7 +9,7 @@ from keyboards.inline.show_more import create_show_more_kb
 # Сюда летят сообщения с ЛОКАЦИЕЙ
 @dispatcher.message_handler(content_types=types.ContentTypes.LOCATION)
 async def location_handler(message: types.Message):
-    nearest_restaurants = get_3_nearest_restaurants(message)
+    nearest_restaurants = get_3_nearest_restaurants(message.location.latitude, message.location.longitude)
 
     for restaurant in nearest_restaurants:
         image_id, text = restaurant.create_message_content(message)
