@@ -22,7 +22,7 @@ class Restaurant:
         self.latitude, self.longitude = Restaurant.parse_coords(coords)
         self.menu_description = self.create_menu_description()
 
-    def create_message_content(self, message: types.Message):
+    def create_message_content(self, user_latitude: float, user_longitude: float):
         if self.image_id == "":
             image_id = "AgACAgIAAxkBAAIH7GDsYzx_ZBpw6q_J4b0BZ_jmeL6sAAJ6szEbrgABaEuSFdUE77IV4gEAAwIAA3MAAyAE"
         else:
@@ -30,7 +30,7 @@ class Restaurant:
 
         text = "<b>{name}</b>\n{menu_description}\n<a href='{link}'>Instagram</a>\n{address}\n{distance} от вас".format(
             name=self.name, menu_description=self.menu_description, link=self.link, address=self.address,
-            distance=Restaurant.format_distance(self.calculate_distance(message.location.latitude, message.location.longitude)))
+            distance=Restaurant.format_distance(self.calculate_distance(user_latitude, user_longitude)))
         return image_id, text
 
     def calculate_distance(self, latitude: float, longitude: float):

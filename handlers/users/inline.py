@@ -1,6 +1,9 @@
 from aiogram import types
-
 from loader import dispatcher
+
+from utils.get_nearest_restaurants import get_next_3_nearest_restaurants
+from keyboards.inline.open_map import create_open_map_kb
+
 
 
 @dispatcher.callback_query_handler(text_contains='open_map')
@@ -13,5 +16,11 @@ async def send_map(call: types.CallbackQuery):
 @dispatcher.callback_query_handler(text_contains='show_more')
 async def show_more(call: types.CallbackQuery):
     data = call.data.split(":")
-    await call.message.answer("SHOW MORE")
-    await call.message.answer(data[1]+", "+data[2])
+    user_latitude, user_longitude = float(data[1]), float(data[2])
+
+    nearest_restaurants = get_next_3_nearest_restaurants(user_latitude, user_longitude)
+
+    for restaurant in nearest_restaurants:
+        image_id, text = restaurant.create_message_content(user_latitude, user_longitude)
+        await call.message.answer_photo(photo=image_id, caption=text, reply_markup=create_open_map_kb(
+            restaurant.latitude, restaurant.longitude, restaurant.name))
