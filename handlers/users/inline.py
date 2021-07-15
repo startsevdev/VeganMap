@@ -18,9 +18,9 @@ async def send_map(call: types.CallbackQuery):
 @dispatcher.callback_query_handler(text_contains='show_more')
 async def show_more(call: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
-    user_latitude, user_longitude = data.get("user_latitude"), data.get("user_longitude")
+    user_latitude, user_longitude, user_state = data.get("user_latitude"), data.get("user_longitude"), data.get("state")
 
-    nearest_restaurants = get_3_nearest_restaurants(user_latitude, user_longitude, data.get("state"))
+    nearest_restaurants = get_3_nearest_restaurants(user_latitude, user_longitude, user_state)
 
     for restaurant in nearest_restaurants:
         image_id, text = restaurant.create_message_content(user_latitude, user_longitude)
