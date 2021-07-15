@@ -14,4 +14,4 @@ async def send_map(call: types.CallbackQuery):
 async def show_more(call: types.CallbackQuery):
     data = call.data.split(":")
     await call.message.answer("SHOW MORE")
-    await call.message.answer(data[1]+data[2])
+    await call.message.answer(data[1]+", "+data[2])
