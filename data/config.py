@@ -5,6 +5,7 @@ env = Env()
 env.read_env()
 
 BOT_TOKEN = env.str("BOT_TOKEN")  # Забираем значение типа str
+ADMIN = env.list("ADMIN")
 ADMINS = env.list("ADMINS")  # Тут у нас будет список из админов
 
 PG_HOST = env.str("PG_HOST")  # Тоже str, но для айпи адреса хоста
