@@ -1,3 +1,4 @@
+import logging
 from aiogram import types
 
 from loader import dispatcher
@@ -8,11 +9,17 @@ from keyboards.inline.open_map import create_open_map_kb
 from keyboards.inline.show_more import create_show_more_kb
 
 
+logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
+                    level=logging.INFO)
+
+
 @dispatcher.callback_query_handler(text_contains='open_map')
 async def send_map(call: types.CallbackQuery):
     data = call.data.split(":")
     await call.message.answer_location(float(data[1]), float(data[2]))
     await call.message.answer("<b>{}</b>".format(data[3]))
+
+    logging.info("User {} clicked «Open map» under {}".format(call.from_user.id, data[3]))
 
 
 @dispatcher.callback_query_handler(text_contains='show_more')
@@ -27,7 +34,9 @@ async def show_more(call: types.CallbackQuery, state: FSMContext):
         await call.message.answer_photo(photo=image_id, caption=text, reply_markup=create_open_map_kb(
             restaurant.latitude, restaurant.longitude, restaurant.name))
 
-    await call.message.answer(text="<b>Больше заведений:</b>", reply_markup=create_show_more_kb())
+    await call.message.answer(text="Больше заведений", reply_markup=create_show_more_kb())
 
     async with state.proxy() as data:
         data["state"] += 1
+
+    logging.info("User {} clicked inline button «Show more»".format(call.from_user.id))
