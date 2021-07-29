@@ -4,7 +4,7 @@ from aiogram.dispatcher import FSMContext
 
 from loader import dispatcher
 from utils.get_nearest_restaurants import get_nearest_restaurant
-from keyboards.inline.open_map import create_open_map_kb
+from keyboards.inline.restaurant_kb import create_restaurant_kb
 from keyboards.inline.show_more import create_show_more_kb
 
 
@@ -17,7 +17,7 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 async def location_handler(message: types.Message, state: FSMContext):
     restaurant = get_nearest_restaurant(message.location.latitude, message.location.longitude, state=0)
     image_id, text = restaurant.create_message_content(message.location.latitude, message.location.longitude)
-    await message.answer_photo(photo=image_id, caption=text, reply_markup=create_open_map_kb(
+    await message.answer_photo(photo=image_id, caption=text, reply_markup=create_restaurant_kb(
         restaurant.latitude, restaurant.longitude, restaurant.name))
 
     # await message.answer(text="Больше заведений", reply_markup=create_show_more_kb())
