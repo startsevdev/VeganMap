@@ -11,3 +11,5 @@ ADMINS = env.list("ADMINS")  # Тут у нас будет список из а�
 PG_HOST = env.str("PG_HOST")  # Тоже str, но для айпи адреса хоста
 PG_USER = env.str("PG_USER")
 PG_PASS = env.str("PG_PASS")
+
+AMPLITUDE_API_KEY = env.str("AMPLITUDE_API_KEY")

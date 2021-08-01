@@ -5,8 +5,7 @@ from aiogram.dispatcher import FSMContext
 from loader import dispatcher
 from utils.get_nearest_restaurants import get_nearest_restaurant
 from keyboards.inline.restaurant_kb import create_restaurant_kb
-from keyboards.inline.show_more import create_show_more_kb
-
+from utils import amplitude
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
                     level=logging.INFO)
@@ -25,3 +24,4 @@ async def location_handler(message: types.Message, state: FSMContext):
 
     logging.info("User {} sent location {}, {}".format(
         message.from_user.id, message.location.latitude, message.location.longitude))
+    amplitude.log_location(message.from_user.id)
