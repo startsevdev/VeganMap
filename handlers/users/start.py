@@ -2,9 +2,8 @@ import logging
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 
-from loader import dispatcher
+from loader import dispatcher, amplitude
 from keyboards.default import send_geo
-from utils import amplitude
 
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',

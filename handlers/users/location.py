@@ -2,10 +2,10 @@ import logging
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dispatcher
+from loader import dispatcher, amplitude
 from utils.get_nearest_restaurants import get_nearest_restaurant
 from keyboards.inline.restaurant_kb import create_restaurant_kb
-from utils import amplitude
+
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
                     level=logging.INFO)

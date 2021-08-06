@@ -2,8 +2,7 @@ from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandHelp
 import logging
 
-from loader import dispatcher
-from utils import amplitude
+from loader import dispatcher, amplitude
 
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
