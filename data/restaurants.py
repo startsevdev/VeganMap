@@ -42,7 +42,7 @@ class Restaurant:
         if self.status == ONLY_VEGAN:
             return "100% vegan"
         elif self.status == PARTLY_VEGAN:
-            return "Больше трех веганских позиций"
+            return "Больше трёх веганских позиций"
         elif self.status == FEW_OPTIONS:
             return "Веганские позиции: " + self.positions
         elif self.status == VEGAN_KITCHEN:

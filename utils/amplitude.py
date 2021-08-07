@@ -11,8 +11,13 @@ URL = 'https://api.amplitude.com/2/httpapi'
 
 
 class Amplitude:
-    def __init__(self, api_key):
+    def __init__(self, api_key, enable=True):
         self.api_key = api_key
+        self.enable = enable
+        if enable:
+            logging.info(f"Amplitude enable. API key: {self.api_key}")
+        else:
+            logging.info(f"Amplitude disable")
 
     @staticmethod
     def send(request):
@@ -20,37 +25,43 @@ class Amplitude:
         logging.info(response.text)
 
     def log_start_command(self, user_id):
-        request = str({
-            "api_key": self.api_key,
-            "events": [{"user_id": user_id, "event_type": "/start"}]})
-        Amplitude.send(request)
+        if self.enable:
+            request = str({
+                "api_key": self.api_key,
+                "events": [{"user_id": user_id, "event_type": "/start"}]})
+            Amplitude.send(request)
 
     def log_help_command(self, user_id):
-        request = str({
-            "api_key": self.api_key,
-            "events": [{"user_id": user_id, "event_type": "/help"}]})
-        Amplitude.send(request)
+        if self.enable:
+            request = str({
+                "api_key": self.api_key,
+                "events": [{"user_id": user_id, "event_type": "/help"}]})
+            Amplitude.send(request)
 
     def log_other(self, user_id):
-        request = str({
-            "api_key": self.api_key,
-            "events": [{"user_id": user_id, "event_type": "Other"}]})
-        Amplitude.send(request)
+        if self.enable:
+            request = str({
+                "api_key": self.api_key,
+                "events": [{"user_id": user_id, "event_type": "Other"}]})
+            Amplitude.send(request)
 
     def log_location(self, user_id):
-        request = str({
-            "api_key": self.api_key,
-            "events": [{"user_id": user_id, "event_type": "Location"}]})
-        Amplitude.send(request)
+        if self.enable:
+            request = str({
+                "api_key": self.api_key,
+                "events": [{"user_id": user_id, "event_type": "Location"}]})
+            Amplitude.send(request)
 
     def log_send_map(self, user_id):
-        request = str({
-            "api_key": self.api_key,
-            "events": [{"user_id": user_id, "event_type": "Open map"}]})
-        Amplitude.send(request)
+        if self.enable:
+            request = str({
+                "api_key": self.api_key,
+                "events": [{"user_id": user_id, "event_type": "Open map"}]})
+            Amplitude.send(request)
 
     def log_send_next(self, user_id):
-        request = str({
-            "api_key": self.api_key,
-            "events": [{"user_id": user_id, "event_type": "Next"}]})
-        Amplitude.send(request)
+        if self.enable:
+            request = str({
+                "api_key": self.api_key,
+                "events": [{"user_id": user_id, "event_type": "Next"}]})
+            Amplitude.send(request)
