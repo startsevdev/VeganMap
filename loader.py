@@ -16,6 +16,6 @@ storage = MemoryStorage()
 dispatcher = Dispatcher(bot, storage=storage)
 amplitude = Amplitude(config.AMPLITUDE_API_KEY, enable=True)
 
-logging.info("Starting parse restaurants.csv")
+logging.info("Starting to parse restaurants.csv")
 restaurants = create_restaurants()
 logging.info("Parsing finished")
