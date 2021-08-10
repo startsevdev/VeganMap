@@ -1,8 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-def create_restaurant_kb(latitude: float, longitude: float, name: str):
-    data = "send_map:{}:{}:{}".format(latitude, longitude, name)
+def create_restaurant_kb(key: int):
+    data = f"send_map:{key}"
     print(f"{data} ({len(data.encode('utf-8'))})")
 
     open_map_button = InlineKeyboardButton("🗺️ Открыть карту", callback_data=data)

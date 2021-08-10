@@ -80,11 +80,13 @@ class Restaurant:
 
 
 def create_restaurants():
-    restaurants = []
+    restaurants = {}
+    r_id = 0
     with open('data/restaurants.csv', newline='') as File:
         reader = csv.reader(File)
         header = next(reader)
         for row in reader:
-            restaurants.append(Restaurant(name=row[0], status=row[1], positions=row[2], image_id=row[3], link=row[4],
-                                          address=row[5], coords=row[6]))
+            restaurants[r_id] = Restaurant(name=row[0], status=row[1], positions=row[2], image_id=row[3], link=row[4],
+                                           address=row[5], coords=row[6])
+            r_id += 1
     return restaurants
