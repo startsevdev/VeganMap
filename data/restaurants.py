@@ -28,7 +28,8 @@ class Restaurant:
         else:
             image_id = self.image_id
 
-        text = "<b>{name}</b>\n\n{menu_description}\n<a href='{link}'>Instagram</a>\n\n{address}\n{distance} от вас".format(
+        # text = "<b>{name}</b>\n\n{menu_description}\n<a href='{link}'>Instagram</a>\n\n{address}\n{distance} от вас".format(
+        text = "<b>{name}</b> • <a href='{link}'>Instagram</a>\n\n{menu_description}\n\n{address}\n{distance} от вас".format(
             name=self.name, menu_description=self.menu_description, link=self.link, address=self.address,
             distance=Restaurant.format_distance(self.calculate_distance(user_latitude, user_longitude)))
         return image_id, text
