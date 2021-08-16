@@ -14,7 +14,7 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 storage = MemoryStorage()
 dispatcher = Dispatcher(bot, storage=storage)
-amplitude = Amplitude(config.AMPLITUDE_API_KEY, enable=True)
+amplitude = Amplitude(config.AMPLITUDE_API_KEY, enable=False)
 
 logging.info("Starting to parse restaurants.csv")
 restaurants = create_restaurants()

@@ -1,6 +1,5 @@
 import requests
 import logging
-from data import config
 
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
@@ -15,9 +14,9 @@ class Amplitude:
         self.api_key = api_key
         self.enable = enable
         if enable:
-            logging.info(f"Amplitude enable. API key: {self.api_key}")
+            logging.info("Amplitude: ON")
         else:
-            logging.info(f"Amplitude disable")
+            logging.info("Amplitude disable")
 
     @staticmethod
     def send(request):
