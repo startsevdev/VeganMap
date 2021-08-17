@@ -1,6 +1,7 @@
 import requests
 import logging
 import json
+import datetime
 
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
@@ -10,13 +11,15 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 URL = 'https://api.amplitude.com/2/httpapi'
 BATCH_URL = 'https://api2.amplitude.com/batch'
 
+TIMEDELTA = datetime.timedelta(minutes=10)
+
 
 class Amplitude:
     def __init__(self, api_key, enable=True):
         self.api_key = api_key
         self.enable = enable
         self.data = {"api_key": self.api_key, "events": []}
-        self.events_counter = 0
+        self.time = datetime.datetime.now()
 
         if enable:
             logging.info("Amplitude: ON")
@@ -31,9 +34,8 @@ class Amplitude:
     def log(self, user_id, event_type: str):
         if self.enable:
             self.data["events"].append({"user_id": user_id, "event_type": event_type})
-            self.events_counter += 1
 
-            if self.events_counter >= 10:
+            if datetime.datetime.now() - self.time >= TIMEDELTA:
                 self.send_data()
                 self.data = {"api_key": self.api_key, "events": []}
-                self.events_counter = 0
+                self.time = datetime.datetime.now()
