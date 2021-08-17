@@ -15,4 +15,4 @@ async def bot_echo_all(message: types.Message, state: FSMContext):
     await message.answer("📍 Отправьте свою геопозицию. В ответ мы пришлем три ближайшие места\n")
 
     logging.info("User {} sent other content".format(message.from_user.id))
-    amplitude.log_other(message.from_user.id)
+    amplitude.log(message.from_user.id, "Other")

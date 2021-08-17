@@ -18,4 +18,4 @@ async def bot_help(message: types.Message):
     await message.answer(text)
 
     logging.info("User {} sent /help".format(message.from_user.id))
-    amplitude.log_help_command(message.from_user.id)
+    amplitude.log(message.from_user.id, "/help")

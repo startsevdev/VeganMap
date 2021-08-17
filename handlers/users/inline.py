@@ -22,7 +22,7 @@ async def send_map(call: types.CallbackQuery):
     await call.message.answer(f"<b>{restaurant.name}</b>", reply_markup=create_send_next_kb())
 
     logging.info(f"User {call.from_user.id} clicked «Open map» under {restaurant.name}")
-    amplitude.log_send_map(call.from_user.id)
+    amplitude.log(call.from_user.id, "Open map")
 
 
 @dispatcher.callback_query_handler(text_contains='send_next')
@@ -42,5 +42,5 @@ async def send_next(call: types.CallbackQuery, state: FSMContext):
             data["state"] += 1
 
     logging.info("User {} clicked inline button «Show more»".format(call.from_user.id))
-    amplitude.log_send_next(call.from_user.id)
+    amplitude.log(call.from_user.id, "Next")
 

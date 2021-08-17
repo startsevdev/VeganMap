@@ -7,60 +7,47 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 
 
 URL = 'https://api.amplitude.com/2/httpapi'
+BATCH_URL = 'https://api2.amplitude.com/batch'
 
 
 class Amplitude:
     def __init__(self, api_key, enable=True):
         self.api_key = api_key
         self.enable = enable
+        self.counter = 0
+        self.request = "{"
+        self.request += f'''"api_key": "{self.api_key}", '''
+        self.request += '''"events": ['''
         if enable:
             logging.info("Amplitude: ON")
         else:
             logging.info("Amplitude disable")
 
-    @staticmethod
-    def send(request):
-        response = requests.post(URL, data=request)
+    def send(self):
+        logging.info(self.request)
+        response = requests.post(BATCH_URL, data=self.request)
         logging.info(response.text)
 
-    def log_start_command(self, user_id):
+    def log(self, user_id, event_type: str):
         if self.enable:
-            request = str({
-                "api_key": self.api_key,
-                "events": [{"user_id": user_id, "event_type": "/start"}]})
-            Amplitude.send(request)
+            if self.counter < 9:
+                self.request += "{"
+                self.request += f'''"user_id": {user_id}, "event_type": "{event_type}"'''
+                self.request += "}, "
+                self.counter += 1
+            else:
+                self.request += "{"
+                self.request += f'''"user_id": {user_id}, "event_type": "{event_type}"'''
+                self.request += "}]}"
 
-    def log_help_command(self, user_id):
-        if self.enable:
-            request = str({
-                "api_key": self.api_key,
-                "events": [{"user_id": user_id, "event_type": "/help"}]})
-            Amplitude.send(request)
+                self.send()
 
-    def log_other(self, user_id):
-        if self.enable:
-            request = str({
-                "api_key": self.api_key,
-                "events": [{"user_id": user_id, "event_type": "Other"}]})
-            Amplitude.send(request)
+                self.request = "{"
+                self.request += f'''"api_key": "{self.api_key}", '''
+                self.request += '''"events": ['''
 
-    def log_location(self, user_id):
-        if self.enable:
-            request = str({
-                "api_key": self.api_key,
-                "events": [{"user_id": user_id, "event_type": "Location"}]})
-            Amplitude.send(request)
+                self.request += "{"
+                self.request += f'''"user_id": {user_id}, "event_type": "{event_type}"'''
+                self.request += "}, "
 
-    def log_send_map(self, user_id):
-        if self.enable:
-            request = str({
-                "api_key": self.api_key,
-                "events": [{"user_id": user_id, "event_type": "Open map"}]})
-            Amplitude.send(request)
-
-    def log_send_next(self, user_id):
-        if self.enable:
-            request = str({
-                "api_key": self.api_key,
-                "events": [{"user_id": user_id, "event_type": "Next"}]})
-            Amplitude.send(request)
+                self.counter = 1

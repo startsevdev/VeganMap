@@ -24,4 +24,4 @@ async def location_handler(message: types.Message, state: FSMContext):
 
     logging.info("User {} sent location {}, {}".format(
         message.from_user.id, message.location.latitude, message.location.longitude))
-    amplitude.log_location(message.from_user.id)
+    amplitude.log(message.from_user.id, "Location")
