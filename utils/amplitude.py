@@ -11,7 +11,7 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 URL = 'https://api.amplitude.com/2/httpapi'
 BATCH_URL = 'https://api2.amplitude.com/batch'
 
-TIMEDELTA = datetime.timedelta(hours=1)
+TIMEDELTA = datetime.timedelta(seconds=30)
 
 
 class Amplitude:

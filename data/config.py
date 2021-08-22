@@ -13,3 +13,4 @@ PG_USER = env.str("PG_USER")
 PG_PASS = env.str("PG_PASS")
 
 AMPLITUDE_API_KEY = env.str("AMPLITUDE_API_KEY")
+AMPLITUDE = "ON"
