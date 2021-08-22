@@ -2,6 +2,7 @@ import requests
 import logging
 import json
 import datetime
+from data import config
 
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
@@ -11,18 +12,15 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 URL = 'https://api.amplitude.com/2/httpapi'
 BATCH_URL = 'https://api2.amplitude.com/batch'
 
-TIMEDELTA = datetime.timedelta(seconds=30)
-
 
 class Amplitude:
-    def __init__(self, api_key, enable=True):
-        self.api_key = api_key
-        self.enable = enable
-        self.data = {"api_key": self.api_key, "events": []}
+    def __init__(self, api_key):
         self.time = datetime.datetime.now()
+        self.api_key = api_key
+        self.data = {"api_key": self.api_key, "events": []}
 
-        if enable:
-            logging.info("Amplitude: ON")
+        if config.AMPLITUDE == "ON":
+            logging.info(f"Amplitude: ON. Data is sent every {config.AMPLITUDE_INTERVAL} seconds")
         else:
             logging.info("Amplitude disable")
 
@@ -32,10 +30,10 @@ class Amplitude:
         logging.info(response.text)
 
     def log(self, user_id, event_type: str):
-        if self.enable:
+        if config.AMPLITUDE == "ON":
             self.data["events"].append({"user_id": user_id, "event_type": event_type})
 
-            if datetime.datetime.now() - self.time >= TIMEDELTA:
+            if datetime.datetime.now() - self.time >= datetime.timedelta(seconds=int(config.AMPLITUDE_INTERVAL)):
                 self.send_data()
                 self.data = {"api_key": self.api_key, "events": []}
                 self.time = datetime.datetime.now()
