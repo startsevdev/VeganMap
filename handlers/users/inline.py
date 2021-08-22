@@ -32,9 +32,10 @@ async def send_next(call: types.CallbackQuery, state: FSMContext):
 
     try:
         key = get_nearest_restaurant_id(user_latitude, user_longitude, user_state)
-        restaurant = restaurants[key]
     except TypeError:
         await call.message.answer("😞 У нас что-то пошло не так. Пожалуйста, отправьте геопозицию повторно")
+    except IndexError:
+        await call.message.answer("🏁 Вы долистали до конца. Чтобы начать новый поиск, отправьте геопозицию")
     else:
         image_id, text = restaurants[key].create_message_content(user_latitude, user_longitude)
         await call.message.answer_photo(photo=image_id, caption=text, reply_markup=create_restaurant_kb(key))
