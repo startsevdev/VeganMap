@@ -16,6 +16,7 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 
 @dispatcher.callback_query_handler(text_contains='send_map')
 async def send_map(call: types.CallbackQuery):
+    await call.answer()
     r_id = int(call.data.split(":")[1])
     restaurant: Restaurant = restaurants[r_id]
     await call.message.answer_location(restaurant.latitude, restaurant.longitude)
@@ -27,6 +28,7 @@ async def send_map(call: types.CallbackQuery):
 
 @dispatcher.callback_query_handler(text_contains='send_next')
 async def send_next(call: types.CallbackQuery, state: FSMContext):
+    await call.answer()
     data = await state.get_data()
     user_latitude, user_longitude, user_state = data.get("user_latitude"), data.get("user_longitude"), data.get("state")
 
