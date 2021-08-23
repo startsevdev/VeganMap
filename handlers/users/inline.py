@@ -22,7 +22,7 @@ async def send_map(call: types.CallbackQuery):
     await call.message.answer_location(restaurant.latitude, restaurant.longitude)
     await call.message.answer(f"<b>{restaurant.name}</b>", reply_markup=create_send_next_kb())
 
-    logging.info(f"User {call.from_user.id} clicked «Open map» under {restaurant.name}")
+    logging.info(f'User {call.from_user.id} clicked "Open map" under {restaurant.name}')
     amplitude.log(call.from_user.id, "Open map")
 
 
