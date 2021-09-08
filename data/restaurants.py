@@ -12,14 +12,14 @@ FEW_OPTIONS = 3
 
 
 class Restaurant:
-    def __init__(self, name, status, positions, image_id, link, address, coords):
+    def __init__(self, name, status, positions, image_id, link, address, latitude, longitude):
         self.name = name
         self.status = Restaurant.encode_status(status)
         self.positions = positions
         self.image_id = image_id
         self.link = link
         self.address = address
-        self.latitude, self.longitude = Restaurant.parse_coords(coords)
+        self.latitude, self.longitude = latitude, longitude
         self.menu_description = self.create_menu_description()
 
     def create_message_content(self, user_latitude: float, user_longitude: float):
@@ -87,7 +87,7 @@ def create_restaurants():
         reader = csv.reader(File)
         header = next(reader)
         for row in reader:
-            restaurants[r_id] = Restaurant(name=row[0], status=row[1], positions=row[2], image_id=row[3], link=row[4],
-                                           address=row[5], coords=row[6])
+            restaurants[r_id] = Restaurant(name=row[1], status=row[2], positions=row[3], image_id=row[8], link=row[5],
+                                           address=row[4], latitude=row[6], longitude=row[7])
             r_id += 1
     return restaurants
