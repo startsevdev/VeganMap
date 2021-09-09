@@ -5,7 +5,7 @@ from geopy import distance
 
 
 # RESTAURANT STATUSES
-ONLY_VEGAN = 0
+ALL_VEGAN = 0
 VEGAN_KITCHEN = 1
 PARTLY_VEGAN = 2
 FEW_OPTIONS = 3
@@ -40,7 +40,7 @@ class Restaurant:
         return distance.distance(user_location, restaurant_location).km
 
     def create_menu_description(self):
-        if self.status == ONLY_VEGAN:
+        if self.status == ALL_VEGAN:
             return "100% vegan"
         elif self.status == PARTLY_VEGAN:
             return "Больше трёх веганских позиций"
@@ -51,11 +51,11 @@ class Restaurant:
 
     @staticmethod
     def encode_status(status):
-        if status == "Only vegan":
-            status = ONLY_VEGAN
-        elif status == "Vegan kitchen":
+        if status == "100% VEGAN":
+            status = ALL_VEGAN
+        elif status == "ТОЛЬКО КУХНЯ":
             status = VEGAN_KITCHEN
-        elif status == "Partly vegan":
+        elif status == "БОЛЬШЕ ТРЁХ ПОЗИЦИЙ":
             status = PARTLY_VEGAN
         else:
             status = FEW_OPTIONS
