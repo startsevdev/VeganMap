@@ -5,7 +5,6 @@ import logging
 from data import config
 from data.restaurants import create_restaurants
 from utils.amplitude import Amplitude
-from utils.mapbox_csv import create_csv
 
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
