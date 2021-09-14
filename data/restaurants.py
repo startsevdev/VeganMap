@@ -10,6 +10,7 @@ VEGAN_KITCHEN = 1
 PARTLY_VEGAN = 2
 FEW_OPTIONS = 3
 UTROO = 4
+UTROO_BAKERY = 5
 
 
 class Restaurant:
@@ -51,6 +52,8 @@ class Restaurant:
             return "Кухня – 100% vegan. По напиткам уточняйте"
         elif self.status == UTROO:
             return "Завтраки в рамках <a href='https://t.me/utroo/1103'>Фестиваля Utroo</a>"
+        elif self.status == UTROO_BAKERY:
+            return "Завтраки в рамках <a href='https://t.me/utroo/1103'>Фестиваля Utroo</a> (только десерты)"
 
     @staticmethod
     def encode_status(status):
@@ -62,6 +65,8 @@ class Restaurant:
             status = PARTLY_VEGAN
         elif status == "UTROO":
             status = UTROO
+        elif status == "UTROO BAKERY":
+            status = UTROO_BAKERY
         else:
             status = FEW_OPTIONS
         return status
