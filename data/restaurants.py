@@ -61,7 +61,7 @@ class Restaurant:
             status = ALL_VEGAN
         elif status == "ТОЛЬКО КУХНЯ":
             status = VEGAN_KITCHEN
-        elif status == "БОЛЬШЕ ТРЁХ БЛЮД":
+        elif status == "БОЛЬШЕ 3 БЛЮД":
             status = PARTLY_VEGAN
         elif status == "UTROO":
             status = UTROO
