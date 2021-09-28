@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters.builtin import CommandSuggest
+from aiogram.dispatcher.filters.builtin import Command
 import logging
 
 from loader import dispatcher, amplitude
@@ -8,6 +8,15 @@ from loader import dispatcher, amplitude
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
                     level=logging.INFO)
+
+
+class CommandSuggest(Command):
+    """
+    This filter based on :obj:`Command` filter but can handle only ``/suggest`` command.
+    """
+
+    def __init__(self):
+        super().__init__(['suggest'])
 
 
 @dispatcher.message_handler(CommandSuggest(), state="*")

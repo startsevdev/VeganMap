@@ -44,7 +44,7 @@ async def send_next(call: types.CallbackQuery, state: FSMContext):
         await call.message.answer("🏁 Вы долистали до конца. Чтобы начать новый поиск, отправьте геопозицию")
     else:
         image_id, text = restaurants[key].create_message_content(user_latitude, user_longitude)
-        await call.message.answer_photo(photo="AgACAgIAAxkBAAIHQ2FQeaWAJNuVOT69C7ZidkrcRZVYAALFtTEbp1aJSqPtScWJ3G5fAQADAgADcwADIQQ", caption=text, reply_markup=create_restaurant_kb(key))
+        await call.message.answer_photo(photo=image_id, caption=text, reply_markup=create_restaurant_kb(key))
         async with state.proxy() as data:
             data["state"] += 1
             # ДЛЯ КЕЙСА, КОГДА ПЕРЕД ЭТИМ НЕ ЗАКОНЧИЛ ПРЕДЛОЖЕНИЕ ЗАВЕДЕНИЯ

@@ -24,7 +24,7 @@ async def bot_echo_all(message: types.Message, state: FSMContext):
         await message.answer("Какие веганские позиции есть в этом заведении?")
     elif suggest_state == 2:
         await state.update_data(suggest_state=0)
-        await message.answer("Мы проверим заведение и, возможно, добавим его в нашу базу. Спасибо!\n\nНам нужна помощь в заполнении базы. Если, вы хотите поучаствовать в развитии Vegan Map, напишите @oksnavau")
+        await message.answer("Мы проверим заведение и, возможно, добавим его в нашу базу. Спасибо!\n\nНам нужна помощь в заполнении базы мест. Если, вы хотите поучаствовать в развитии Vegan Map, напишите @oksnavau")
 
         restaurant_name = data.get("restaurant_name")
         await bot.send_message(config.ADMINS[0], f'#предложенное_заведение\n<b>{data.get("restaurant_name")}</b>\n{message.text}')
