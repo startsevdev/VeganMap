@@ -1,8 +1,8 @@
-from loader import restaurants
+from loader import database
 
 
 def get_nearest_restaurant_id(latitude: float, longitude: float, state: int):
-    sorted_ids = sorted(restaurants, key=lambda r_id: restaurants[r_id].calculate_distance(latitude, longitude))
+    sorted_ids = sorted(database.restaurants, key=lambda r_id: database.restaurants[r_id].calculate_distance(latitude, longitude))
     return sorted_ids[state]
 
 
