@@ -1,7 +1,7 @@
 import logging
 from aiogram import types
 
-from loader import dispatcher, amplitude, database
+from loader import dispatcher, amplitude, restaurants_storage
 from aiogram.dispatcher import FSMContext
 from data.restaurants import Restaurant
 
@@ -18,7 +18,7 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 async def send_map(call: types.CallbackQuery, state: FSMContext):
     await call.answer()
     r_id = int(call.data.split(":")[1])
-    restaurant: Restaurant = database.restaurants[r_id]
+    restaurant: Restaurant = restaurants_storage.restaurants[r_id]
     await call.message.answer_location(restaurant.latitude, restaurant.longitude)
     await call.message.answer(f"<b>{restaurant.name}</b>", reply_markup=create_send_next_kb())
 
@@ -43,7 +43,7 @@ async def send_next(call: types.CallbackQuery, state: FSMContext):
     except IndexError:
         await call.message.answer("🏁 Вы долистали до конца. Чтобы начать новый поиск, отправьте геопозицию")
     else:
-        image_id, text = database.restaurants[key].create_message_content(user_latitude, user_longitude)
+        image_id, text = restaurants_storage.restaurants[key].create_message_content(user_latitude, user_longitude)
         await call.message.answer_photo(photo=image_id, caption=text, reply_markup=create_restaurant_kb(key))
         async with state.proxy() as data:
             data["state"] += 1

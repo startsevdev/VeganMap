@@ -1,7 +1,7 @@
 from aiogram import types
 import logging
 
-from loader import dispatcher, database
+from loader import dispatcher, restaurants_storage
 from data.config import ADMINS
 from data.restaurants import create_restaurants
 from loader import bot
@@ -19,7 +19,7 @@ async def document_handler(message: types.Message):
         logging.info("File restaurants.csv replaced")
 
         # обновляем restaraunts (который лежит в loader)
-        database.update_restaurants(create_restaurants())
+        restaurants_storage.update_restaurants(create_restaurants())
         logging.info("Parsing finished")
         await message.answer("🙌 База обновлена ")
 
