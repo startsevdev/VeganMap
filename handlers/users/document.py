@@ -18,7 +18,7 @@ async def document_handler(message: types.Message):
         await bot.download_file_by_id(message.document.file_id, "data/restaurants.csv")
         logging.info("File restaurants.csv replaced")
 
-        # обновляем restaraunts (который лежит в loader)
+        # обновляем restaurants (который лежит в loader)
         restaurants_storage.update_restaurants(create_restaurants())
         logging.info("Parsing finished")
         await message.answer("🙌 База обновлена ")
