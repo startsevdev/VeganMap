@@ -13,10 +13,11 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
 @dispatcher.message_handler(CommandStart())
 async def bot_start(message: types.Message):
     await message.answer('''
-    Привет!\nСпасибо, что присоединилсь к Vegan Map! Сделаем веганство доступнее вместе 🌱
-    
+Привет!
+
 Посмотрим, какие места есть рядом? Для этого нажмите «📍 Отправить геопозицию».
-Если кнопка не работает, жми /help''', reply_markup=send_geo)
+Если кнопка не работает, жмите /help
+''', reply_markup=send_geo)
 
     logging.info("User {} sent /start".format(message.from_user.id))
     amplitude.log(message.from_user.id, "/start")
